@@ -3,6 +3,7 @@ layout: page
 title: Projects
 ---
 <section class="list">
+    {% assign isProjects = false %}
     {% for post in site.posts %}
         {% if post.projects %}
             <div class="item {% if post.star %}star{% endif %}">
@@ -11,6 +12,10 @@ title: Projects
                     {{ post.jemoji }}<h3 class="title">{{ post.title }}</h3>
                 </a>
             </div>
+            {% assign isProjects = true %}
         {% endif %}
     {% endfor %}
+    {% if isProjects == false %}
+          <p class="text-center">There is no projects yet :frowning:</p>
+    {% endif %}
 </section>
