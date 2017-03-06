@@ -14,14 +14,8 @@ layout: page
 <p class="thirdParagraph"> As for me, that I started <strong> my way </strong> of a programmer from love for solve tasks from <strong>olympiad programming</strong>. The result "Accepted" for me was like "oh yeah". At those days I was using <strong> Pascal</strong>, <strong> C </strong> and little <strong> C++ </strong>. But time is going and I wanted to do something real, so I took a look on <strong>C#</strong>. And I loved this language. This is how I became familiar with .NET. Started with Unity3d and passion for creating games, I became a <strong>mobile developer</strong>. After that, in the March 2016 year, I decided to try something new and it is <strong>Xamarin</strong>. I'm thankful to Xamarin team, that provided free student license.
 In my opinion, what is great in Xamarin, that you feel that it has potential power. It had fascinated me also. That is why I think that domination of Xamarin  is a matter of time and in an amount of blogs too! :wink:</p>
 
-<h4>And who is actually me?</h4>
+<h4>And who is actually I?</h4>
 <p class="forthParagraph">I was born and grown in Khmelnitsky, <strong>Ukraine</strong>. For now, I live and work in <strong>Kiev</strong>. I graduated Polytechnical college on specialty "Computer systems and networks", but part of me that loves programming has captured me.  
-In free time, I like to <strong>walk</strong> (usually with people), watch some <strong>film</strong>, play <strong>table tennis</strong> or ride a <strong>bike</strong>, <strong>self-improve</strong>. Have great plans about <strong>traveling</strong> in any kind, to see everything in the world, and get to know true happiness. And a good cup of tea :coffee: is appreciated also. </p>
+In free time, I like to <strong>walk</strong> (usually with people), watch some <strong>film</strong>, play <strong>table tennis</strong> or ride a <strong>bike</strong>, <strong>self-improve</strong>. Have great plans about <strong>traveling</strong> in any kind, to see everything in the world, and get to know true happiness. And a good cup of tea :four_leaf_clover: is appreciated also. </p>
 
-<p class="fiveParagraph">I still learn English, so don't abuse me much.</p>
-
-<h2>Projects</h2>
-
-<ul class="projects">
-	<li><a href=""> </a></li>
-</ul>
+<p class="fifthParagraph">I still learn English, so don't abuse me much.</p>
