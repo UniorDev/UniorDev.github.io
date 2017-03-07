@@ -16,7 +16,7 @@ resume: true
 resume-external: true
 resume-url: https://rabota.ua/ua/cv/9893044
 
-url: UniorDev.github.io
+url: https://uniordev.ml
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
@@ -37,7 +37,7 @@ disqus:
   categories: [blog, project] # only show disqus for posts that have these categories
 
 # if you don't have any of social below, comment the line
-facebook: people/Юрій-Бабій/100008701630441
+facebook: 100008701630441
 # twitter: mytwitter
 # google: mygoogle
 # instagram: myinstagram
