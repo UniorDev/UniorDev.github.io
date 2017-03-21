@@ -99,7 +99,7 @@ catch ( Java.Lang.RuntimeException exception )
 
 Now, we can use our FontIcon in code or XAML. Do it like that:
 
-{% highlight XAML %}
+{% highlight XML %}
  xmlns:coolStuffWithFormattedText="clr-namespace:CoolStuffWithFormattedText;assembly=CoolStuffWithFormattedText"
 
 <coolStuffWithFormattedText:FontIcon Text="&#xf19d;"
@@ -119,4 +119,54 @@ you can find [here](http://fontawesome.io/cheatsheet/).
 I think Formatted Text should be more covered by official resources, because it's
 powerful thing and it has many ways of usage. But what is Formatted Text?  
 `FormattedText` is a property of `Label`. It's like text, where every piece of it
-can be styled almost independently. Isn't cool?
+can be styled almost independently. You can create it in XAML, or from code. It
+is bindable, and it is where interesting stuff.
+In XAML:
+{% highlight XML %}
+<Label>
+     <Label.FormattedText>
+       <FormattedString>
+         <FormattedString.Spans>
+           <Span Text="Red, "
+                 ForegroundColor="Red"
+                 FontAttributes="Italic"
+                 FontSize="20" />
+           <Span Text=" blue, "
+                 ForegroundColor="Blue"
+                 FontSize="32" />
+           <Span Text=" and green! "
+                 ForegroundColor="Green"
+                 FontSize="12"/>
+         </FormattedString.Spans>
+       </FormattedString>
+     </Label.FormattedText>
+   </Label>
+{% endhighlight %}
+Very disappoint is that `Text` in `Span`  isn't bindable. And here is where bindable
+`FormattetText` is ruling. From code:
+
+{% highlight XML %}
+<Label FormattedText="{Binding CustomText}"/>
+{% endhighlight %}
+
+{% highlight C# %}
+private string first = "First";
+private string third;
+
+public FormattedString CustomText => new FormattedString
+{
+    Spans =
+    {
+        new Span {Text = first, FontAttributes = FontAttributes.Italic, FontSize = 18},
+        new Span {Text = "Second"},
+        new Span {Text = third, ForegroundColor = Color.Green, BackgroundColor = Color.Gray}
+    }
+};
+
+public FormattedTextPageViewModel()
+{
+    third = "Third";
+}
+{% endhighlight %}
+
+But also we can add 
