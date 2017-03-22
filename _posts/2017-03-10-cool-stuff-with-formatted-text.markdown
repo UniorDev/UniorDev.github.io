@@ -17,6 +17,15 @@ description: Various ways of creating and real-life use.
 Article is comprehensive, so please use anchors below to navigate between
 sections.
 
+- [Introduction](#Introduction)
+- [How to work with font icons](#How to work with font icons)
+- [Understanding of FormattedText](#Understanding of FormattedText)
+- [Combo of Formatted Text and Font Icons](#Combo of Formatted Text and Font Icons)
+- [Some useful things](#Some useful things)
+- [Conclusion](#Conclusion)
+
+---  
+
 ## Introduction:
 We start from custom fonts and font icons.
 There are plenty of articles on internet, where you can find how to use custom
@@ -84,16 +93,22 @@ namespace CoolStuffWithFormattedText.Droid
 If it's `.ttf`, then OK, but because of `.otf` you should modify it to avoid error on Android:
 
 {% highlight C# %}
-try
+base.OnElementChanged(e);
+if (Control == null || Element.FontFamily == null) return;
+
+if ( e.OldElement == null )
 {
-   Control.Typeface = Typeface.CreateFromAsset(Forms.Context.Assets, Element.FontFamily + ".ttf");
-}
-catch ( Java.Lang.RuntimeException exception )
-{
-   if ( exception.Message == "native typeface cannot be made" || exception.Message == "Font asset not found FontAwesome.ttf" )
-       Control.Typeface = Typeface.CreateFromAsset(Forms.Context.Assets, Element.FontFamily + ".otf");
-   else
-       throw;
+   try
+   {
+       Control.Typeface = Typeface.CreateFromAsset(Forms.Context.Assets, Element.FontFamily + ".ttf");
+   }
+   catch ( Java.Lang.RuntimeException exception )
+   {
+       if ( exception.Message == "native typeface cannot be made")
+           Control.Typeface = Typeface.CreateFromAsset(Forms.Context.Assets, Element.FontFamily + ".otf");
+       else
+           throw;
+   }
 }
 {% endhighlight %}
 
@@ -169,4 +184,215 @@ public FormattedTextPageViewModel()
 }
 {% endhighlight %}
 
-But also we can add 
+More cool that we can add or edit spans dynamically:
+{% highlight XML %}
+<Label FormattedText="{Binding DynamicFormattedText}"/>
+
+    <Button Command="{Binding AddSpanCommand}" Text="Add Span" HorizontalOptions="FillAndExpand"/>
+{% endhighlight %}
+
+{% highlight C# %}
+private FormattedString _dynamicFormattedText = new FormattedString { Spans = { new Span { Text = "0", FontSize = 18 } } };
+public FormattedString DynamicFormattedText
+{
+    get { return _dynamicFormattedText; }
+    set { SetProperty(ref _dynamicFormattedText, value); }
+}
+
+public DelegateCommand AddSpanCommand => new DelegateCommand(OnAddSpan);
+
+private void OnAddSpan()
+{
+    Device.BeginInvokeOnMainThread(() =>
+    {
+        if ( DynamicFormattedText.Spans.Count >= 1 )
+        {
+            DynamicFormattedText.Spans[DynamicFormattedText.Spans.Count - 1].Text = "1";
+            DynamicFormattedText.Spans[DynamicFormattedText.Spans.Count - 1].ForegroundColor =
+                Color.FromHex($"#{new Random().Next(0x1000000):X6}");
+        }
+        var span = new Span { Text = "0", FontSize = 18 };
+        DynamicFormattedText.Spans.Add(span);
+    });
+
+}
+{% endhighlight %}
+<!-- markup clean_ -->
+Maybe you will come to thought that you could declare your span once and not
+create it all the time. It is bad idea. **`Span` is reference type**, so you will
+change all the spans when you want to change one.  
+Still don't get the idea what benefits of it? Don't worry, next chapter will open
+your eyes.
+
+## Combo of Formatted Text and Font Icons:
+Before we start to take all advantages of it, it would be better to add some
+that will save you time on debugging one bug, that occurs in Forms implementation
+of `FormattedText` in `Label`. It sometimes mess up with `FontFamily` of particular
+spans.  
+Therefore, first, create custom render of `Label`. I would suggest you to create
+for it derived class from `Label`.
+{% highlight C# %}
+public class CustomSpannableLabel : Label { }
+{% endhighlight %}
+Second, create custom render for iOS and Android.
+For iOS it has about 100 lines of code, so I will post here only meaningful code:
+{% highlight C# %}
+private void UpdateFormattedText()
+{
+    var text = Control?.AttributedText as NSMutableAttributedString;
+    if ( text == null ) return;
+    var fontFamily = Element.FontFamily;
+    text.BeginEditing();
+    FixBackground(text);
+    if ( Element.FormattedText == null )
+        FixFontAtLocation(0, text, fontFamily, Element.FontAttributes);
+    else
+    {
+        var location = 0;
+        foreach ( var span in Element.FormattedText.Spans )
+        {
+            var spanFamily = span.FontFamily ?? fontFamily;
+            FixFontAtLocation(location, text, spanFamily, span.FontAttributes);
+            location += span.Text.Length;
+        }
+    }
+    text.EndEditing();
+}
+
+private void FixFontAtLocation(int location, NSMutableAttributedString text, string fontFamily,
+   FontAttributes fontAttributes)
+{
+   if ( fontFamily == null ) return;
+
+   NSRange range;
+   var font = ( UIFont )text.GetAttribute(UIStringAttributeKey.Font, location, out range);
+   var newName = GetFontName(fontFamily, fontAttributes);
+   font = UIFont.FromName(newName, font.PointSize);
+   text.RemoveAttribute(UIStringAttributeKey.Font, range);
+   text.AddAttribute(UIStringAttributeKey.Font, font, range);
+}
+{% endhighlight %}
+What it does, it's setting font family for each span.
+For Android we should add a code with pretty same functionality:
+{% highlight C# %}
+if ( Element?.FormattedText == null ) return;
+
+            var extensionType = typeof(FormattedStringExtensions);
+            var type = extensionType.GetNestedType("FontSpan", BindingFlags.NonPublic);
+            var ss = new SpannableString(Control.TextFormatted);
+            var spans = ss.GetSpans(0, ss.ToString().Length, Class.FromType(type));
+            foreach ( var span in spans )
+            {
+                var font = ( Font )type.GetProperty("Font").GetValue(span, null);
+                if ( ( font.FontFamily ?? Element.FontFamily ) != null )
+                {
+                    var start = ss.GetSpanStart(span);
+                    var end = ss.GetSpanEnd(span);
+                    var flags = ss.GetSpanFlags(span);
+                    ss.RemoveSpan(span);
+                    var newSpan = new CustomTypefaceSpan(Control, Element, font);
+                    ss.SetSpan(newSpan, start, end, flags);
+                }
+            }
+            Control.TextFormatted = ss;
+{% endhighlight %}
+We should say thanks [Michael](http://smstuebe.de/2016/04/03/formattedtext.xamrin.forms/) for this fix.  
+To see all code I attach a link on this project in the end of the article.  
+Now with this, we can create something *really good*. It depends on your imagination how you will use it. It's easy to create a ***checkbox***, or ***radio button***, ***stars***, ***likes*** and ***everything*** you like.  
+I have created something like battery status control to display you it's possibilities.
+{% highlight XML %}
+<StackLayout HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand">
+    <coolStuffWithFormattedText:CustomSpannableLabel FormattedText="{Binding Battery}"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     HorizontalTextAlignment="Center"
+                                                     VerticalOptions="CenterAndExpand"/>
+    <Button Command="{Binding ConsumeBatteryCommand}"
+            Text="Consume Battery"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"/>
+  </StackLayout>
+{% endhighlight %}  
+{% highlight C# %}
+private FormattedString _battery = new FormattedString
+{
+    Spans =
+    {
+        new Span { Text = BatteryStatusIcons[0], FontSize = 18, FontFamily = "FontAwesome", ForegroundColor = Color.Green },
+        new Span { Text = BatteryStatus[0], FontSize = 18, ForegroundColor = Color.Black }
+    }
+};
+
+public FormattedString Battery
+{
+    get { return _battery; }
+    set { SetProperty(ref _battery, value); }
+}
+
+private static readonly string[] BatteryStatusIcons = { "\uf240", "\uf241", "\uf242", "\uf243", "\uf244" };
+private static readonly Color[] BatteryColors = { Color.Green, Color.Yellow, Color.Olive, Color.Red, Color.Black };
+private static readonly string[] BatteryStatus = { " Full", " Half", " Low", " Very low", " Dead" };
+public DelegateCommand ConsumeBatteryCommand => new DelegateCommand(OnConsumeBattery);
+
+public ComboPageViewModel() { }
+
+private void OnConsumeBattery()
+{
+    Device.BeginInvokeOnMainThread(async () =>
+    {
+        for ( var i = 1; i < BatteryStatusIcons.Length; i++ )
+        {
+            Battery.Spans[0].Text = BatteryStatusIcons[i];
+            Battery.Spans[0].ForegroundColor = BatteryColors[i];
+            Battery.Spans[1].Text = BatteryStatus[i];
+            await Task.Delay(2000);
+        }
+        Battery.Spans[0].Text = BatteryStatusIcons[0];
+        Battery.Spans[0].ForegroundColor = BatteryColors[0];
+        Battery.Spans[1].Text = BatteryStatus[0];
+    });
+}
+{% endhighlight %}
+<!-- markup clean_ -->
+
+## Some useful things:
+
+It is usually necessary to put something on another line. To do that, we can use
+`Environment.NewLine`. Here is example:
+{% highlight XML %}
+<coolStuffWithFormattedText:CustomSpannableLabel FormattedText="{Binding NewLineText}"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="FillAndExpand"
+                                                 HorizontalTextAlignment="Center"/>
+{% endhighlight %}
+
+{% highlight C# %}    
+public FormattedString NewLineText => new FormattedString
+        {
+            Spans =
+            {
+                new Span
+                {
+                    Text = "\uf063" + Environment.NewLine + "Stop looking at me",
+                    FontFamily = "FontAwesome",
+                    FontSize = 24
+                }
+            }
+        };
+{% endhighlight %}    
+
+Another great thing, is ***non-breaking space***. For example you want to make complex
+`FormattedText` where you have font icon and text together. But when it hasn't
+enough horizontal space on display, text will be on another line, but icon is
+still on previous line. If it is something like checkbox, you will not like it.
+This is where non-breaking space do it best. It prevents this two things be
+separate. It has `\u00A0` unicode.  
+One more, is ***paragraph*** unicode `\u2029`. You even can flip your text with [this](http://www.sherv.net/flip.html) tool. You can use another unicodes also.
+There are pretty much on the Internet.
+If you know something useful of that kind of things, please share it with us.
+
+## Conclusion:
+Today we have covered not so popular, but it has to be, FormattedText property,
+that with help of spans and font icons gives us flexibility and power to do various
+cool things.  
+ Project with ***full code*** you can find [here](https://github.com/UniorDev/CoolStuffWithFormattedText). It was good to learn it with you! :wink:       
