@@ -17,14 +17,12 @@ description: Various ways of creating and real-life use.
 Article is comprehensive, so please use anchors below to navigate between
 sections.
 
-- [Introduction](#Introduction)
-- [How to work with font icons](#How to work with font icons)
-- [Understanding of FormattedText](#Understanding of FormattedText)
-- [Combo of Formatted Text and Font Icons](#Combo of Formatted Text and Font Icons)
-- [Some useful things](#Some useful things)
-- [Conclusion](#Conclusion)
-
----  
+- [Introduction](#introduction)
+- [How to work with font icons](#how-to-work-with-font-icons)
+- [Understanding of FormattedText](#understanding-of-formattedtext)
+- [Combo of Formatted Text and Font Icons](#combo-of-formatted-text-and-font-icons)
+- [Some useful things](#some-useful-things)
+- [Conclusion](#conclusion)
 
 ## Introduction:
 We start from custom fonts and font icons.
@@ -129,7 +127,7 @@ In C# your unicode should be like this: `\uf19d`. All unicodes for
 you can find [here](http://fontawesome.io/cheatsheet/).
 
 
-## Understanding of  FormattedText:
+## Understanding of FormattedText:
 
 I think Formatted Text should be more covered by official resources, because it's
 powerful thing and it has many ways of usage. But what is Formatted Text?  
