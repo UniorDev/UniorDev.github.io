@@ -123,8 +123,9 @@ Now, we can use our FontIcon in code or XAML. Do it like that:
 {% endhighlight %}
 
 In C# your unicode should be like this: `\uf19d`.  
-
-![FontIcon](https://raw.githubusercontent.com/UniorDev/UniorDev.github.io/firstPost/assets/images/CoolStuffWithFormattedText/FontIcon.jpg)  
+<div style="text-align:center">
+<img align="center" src="FontIcon.jpg"/>  
+</div>
 All unicodes for Font Awesome you can find [here](http://fontawesome.io/cheatsheet/).
 
 
@@ -156,6 +157,11 @@ In XAML:
      </Label.FormattedText>
    </Label>
 {% endhighlight %}
+
+<div style="text-align:center">
+<img align="center" src="RedBlueGreen.jpg"/>  
+</div>
+
 Very disappoint is that `Text` in `Span`  isn't bindable. And here is where bindable
 `FormattetText` is ruling. From code:
 
@@ -182,6 +188,10 @@ public FormattedTextPageViewModel()
     third = "Third";
 }
 {% endhighlight %}
+
+<div style="text-align:center">
+<img align="center" src="BindableSpans.jpg"/>  
+</div>
 
 More cool that we can add or edit spans dynamically:
 {% highlight XML %}
@@ -217,6 +227,11 @@ private void OnAddSpan()
 }
 {% endhighlight %}
 <!-- markup clean_ -->
+
+<div style="text-align:center">
+<img align="center" src="DynamicSpans.jpg"/>  
+</div>
+
 Maybe you will come to thought that you could declare your span once and not
 create it all the time. It is bad idea. **`Span` is reference type**, so you will
 change all the spans when you want to change one.  
@@ -354,6 +369,10 @@ private void OnConsumeBattery()
 {% endhighlight %}
 <!-- markup clean_ -->
 
+<div style="text-align:center">
+<img align="center" src="Combo.gif"/>  
+</div>
+
 ## Some useful things:
 
 It is usually necessary to put something on another line. To do that, we can use
@@ -389,6 +408,10 @@ separate. It has `\u00A0` unicode.
 One more, is ***paragraph*** unicode `\u2029`. You even can flip your text with [this](http://www.sherv.net/flip.html) tool. You can use another unicodes also.
 There are pretty much on the Internet.
 If you know something useful of that kind of things, please share it with us.
+
+<div style="text-align:center">
+<img align="center" src="UsefulThings.jpg"/>  
+</div>
 
 ## Conclusion:
 Today we have covered not so popular, but it has to be, FormattedText property,
