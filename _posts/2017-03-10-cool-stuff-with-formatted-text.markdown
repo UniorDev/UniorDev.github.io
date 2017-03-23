@@ -122,9 +122,10 @@ Now, we can use our FontIcon in code or XAML. Do it like that:
 
 {% endhighlight %}
 
-In C# your unicode should be like this: `\uf19d`. All unicodes for    
- Font Awesome
-you can find [here](http://fontawesome.io/cheatsheet/).
+In C# your unicode should be like this: `\uf19d`.  
+
+![FontIcon](https://raw.githubusercontent.com/UniorDev/UniorDev.github.io/firstPost/assets/images/CoolStuffWithFormattedText/FontIcon.jpg)  
+All unicodes for Font Awesome you can find [here](http://fontawesome.io/cheatsheet/).
 
 
 ## Understanding of FormattedText:
