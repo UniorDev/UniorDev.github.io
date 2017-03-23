@@ -16,8 +16,6 @@ description: Various ways of creating and real-life use.
 ## Summary:
 Article is comprehensive, so please use anchors below to navigate between
 sections.
-<<<<<<< HEAD
-=======
 
 - [Introduction](#introduction)
 - [How to work with font icons](#how-to-work-with-font-icons)
@@ -420,4 +418,3 @@ Today we have covered not so popular, but it has to be, FormattedText property,
 that with help of spans and font icons gives us flexibility and power to do various
 cool things.  
  Project with ***full code*** you can find [here](https://github.com/UniorDev/CoolStuffWithFormattedText). It was good to learn it with you! :wink:       
->>>>>>> develop
