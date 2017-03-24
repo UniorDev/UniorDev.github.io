@@ -123,9 +123,15 @@ Now, we can use our FontIcon in code or XAML. Do it like that:
 {% endhighlight %}
 
 In C# your unicode should be like this: `\uf19d`.  
-<div style="text-align:center">
+<!-- <div style="text-align:center">
 <img align="center" src="FontIcon.jpg"/>  
+</div> -->
+
+<div style="text-align:center">
+{% include image name="FontIcon.jpg" %}
 </div>
+
+
 All unicodes for Font Awesome you can find [here](http://fontawesome.io/cheatsheet/).
 
 
@@ -220,8 +226,8 @@ private void OnAddSpan()
             DynamicFormattedText.Spans[DynamicFormattedText.Spans.Count - 1].ForegroundColor =
                 Color.FromHex($"#{new Random().Next(0x1000000):X6}");
         }
-        var span = new Span { Text = "0", FontSize = 18 };
-        DynamicFormattedText.Spans.Add(span);
+        var zeroSpan = new Span { Text = "0", FontSize = 18 };
+        DynamicFormattedText.Spans.Add(zeroSpan);
     });
 
 }

@@ -106,7 +106,6 @@ gems:
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-paginate
-  - jekyll-postfiles
 
 jekyll-mentions:
     base_url: https://github.com
