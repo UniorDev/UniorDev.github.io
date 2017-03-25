@@ -17,6 +17,7 @@ resume-external: true
 resume-url: https://rabota.ua/ua/cv/9893044
 
 url: https://uniordev.ml
+base_url: https://github.com/UniorDev/UniorDev.github.io
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
@@ -108,4 +109,4 @@ gems:
   - jekyll-paginate
 
 jekyll-mentions:
-    base_url: https://github.com/UniorDev
+    base_url: https://github.com
