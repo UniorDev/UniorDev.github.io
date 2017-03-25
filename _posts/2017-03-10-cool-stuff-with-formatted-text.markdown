@@ -165,7 +165,7 @@ In XAML:
 {% endhighlight %}
 
 <div style="text-align:center">
-<img align="center" src="RedBlueGreen.jpg"/>  
+{% include image name="RedBlueGreen.jpg" %}
 </div>
 
 Very disappoint is that `Text` in `Span`  isn't bindable. And here is where bindable
@@ -196,7 +196,7 @@ public FormattedTextPageViewModel()
 {% endhighlight %}
 
 <div style="text-align:center">
-<img align="center" src="BindableSpans.jpg"/>  
+{% include image name="BindableSpans.jpg" %}
 </div>
 
 More cool that we can add or edit spans dynamically:
@@ -235,7 +235,7 @@ private void OnAddSpan()
 <!-- markup clean_ -->
 
 <div style="text-align:center">
-<img align="center" src="DynamicSpans.jpg"/>  
+{% include image name="DynamicSpans.jpg" %}
 </div>
 
 Maybe you will come to thought that you could declare your span once and not
@@ -376,7 +376,7 @@ private void OnConsumeBattery()
 <!-- markup clean_ -->
 
 <div style="text-align:center">
-<img align="center" src="Combo.gif"/>  
+{% include image name="Combo.gif" %}
 </div>
 
 ## Some useful things:
@@ -416,7 +416,7 @@ There are pretty much on the Internet.
 If you know something useful of that kind of things, please share it with us.
 
 <div style="text-align:center">
-<img align="center" src="UsefulThings.jpg"/>  
+{% include image name="UsefulThings.jpg" %}
 </div>
 
 ## Conclusion:
