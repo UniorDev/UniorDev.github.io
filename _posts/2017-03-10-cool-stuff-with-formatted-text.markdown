@@ -2,7 +2,6 @@
 title: "Cool stuff with Formatted Text"
 layout: post
 date: 2017-03-10
-<!-- image: /assets/images/markdown.jpg -->
 headerImage: false
 tag:
 - xamarin
