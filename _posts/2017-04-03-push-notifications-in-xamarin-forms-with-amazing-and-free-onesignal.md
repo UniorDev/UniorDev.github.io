@@ -22,6 +22,13 @@ more.
  Wonder how it could be possible? With wonderful [__OneSignal__](https://onesignal.com/)! Already
 interesting? Let's do it!
 
+- [Introduction](#introduction)
+- [Starting to work with OneSignal](#starting-to-work-with-onesignal)
+- [Configuring iOS platform](#configuring-ios-platform)
+- [Configuring Android platform](#configuring-android-platform)
+- [Setup OneSignal SDK for Xamarin](#setup-onesignal-sdk-for-xamarin)
+- [Conclusion](#conclusion)
+
 ## Introduction:
 So how do push notifications works? Not so easy. To say simply, there are three
 main things that do work. Server, that sends notifications. A regulated service,
@@ -36,15 +43,17 @@ cabinet. You could do all this what we will do next by yourself, there are many 
 and excellent documentation, but I will help you with some steps.
 _Click on App Settings_, and this is where the interesting is starting.
 
-## Configure iOS platform:
+## Configuring iOS platform:
 This part was the hardest to me. I assume that you already have properly tuned your
 development provision profile, id, device for debug and development
-certificate for iOS. If it is so, than you in same position where I was. If not,
+certificate for iOS.  
+If it is so, than you in same position where I was. If not,
 then I'm suprised why you are reading it, but still there is an option for you.
 [This](https://developer.xamarin.com/guides/ios/getting_started/installation/device_provisioning/)
-may help you to set it all up. OneSignal assumes that you has it done, and
+may help you to set it all up.  
+OneSignal assumes that you has it done, and
 now you only want to add push notifications functionality, and it's right.
-But that didn't work for me, so I was forced to recreate id and provision
+But that didn't work :anguished: for me, so I was forced to recreate id and provision
 profile and delete all previous, then set it up in Xcode. So, I would suggest
 you do the same if it will not work for you either. Also from my experience
 better to create all things manually instead of automatically.  
@@ -57,34 +66,65 @@ to enable push notifications for your app in Xcode. If you lost it in instructio
 you can find it [here](https://documentation.onesignal.com/docs/ios-sdk-setup#section-2-add-required-capabilities).  
 
 __Some tips about that:__  
-1. You should create this OneSignalNot.. in your current project(app).  
-I missed it once and you don't want to do so;  
-2. Change NotificationService.m, but not NotificationService.h;  
-3. Replace `project_name` with your project name in podfile;  
-4. Be sure that you have exactly same text in podfile(except project name), as it is on site;
-5. Don't forget to replace default appId with your OneSignal App ID in _AppDelegate_;   
+
+* You should create this OneSignalNot.. in your current project(app).
+I missed it once :grimacing: and you don't want to do so;   
+
+* Change NotificationService.m, but not NotificationService.h;  
+
+* Replace `project_name` with your project name in podfile;  
+
+* Be sure that you have exactly same text in podfile(except project name), as it is on site;  
+
+* Don't forget to replace default appId with your OneSignal App ID in _AppDelegate_;     
 
 Also, be sure that proper provision profile is selected in general tab of your
 project in Xcode. For sure, you can also in _Build Setting_ tab in the _Signing_
 section set proper field manually.  
 Now, in _App Settings_ you finally should see _Status_ of iOS platform as _Active_.
 
-## Configure Android platform:
+## Configuring Android platform:
 
 For Android, it's extremely simple. Click Configure for Android platform and just
 follow instructions. After you done that, you should see your Android platform
 status as Active.
 
-## Setup OneSignal SDK for Xamarin
+## Setup OneSignal SDK for Xamarin:
 
 It's really great, that OneSignal SDK for Xamarin was created. [Here](https://github.com/OneSignal/OneSignal-Xamarin-SDK) is where it
-live. Nuget package was created pretty recently, so we are happy that we can use
-in easiest way. Here is where was conversation about it. And I thank [Martijn]
-(https://github.com/martijn00) for such good work, not only with OneSignal SDK,
-but with great things also.
-So, follow [this](https://documentation.onesignal.com/docs/xamarin-sdk-setup) instructions.
-Some tips:  
-1. Don't forget to change `manifestApplicationId`. Your package name you can find
+live. The NuGet package was created pretty recently, so we are happy that we can
+work with OneSignal in the easiest way. Here is where was the conversation about it.
+And I thank [Martijn] (https://github.com/martijn00) for such good work, not only
+with OneSignal SDK, but with great things also.
+So, follow [this](https://documentation.onesignal.com/docs/xamarin-sdk-setup) instructions.  
+
+__Some tips:__
+
+* Don't forget to change `manifestApplicationId`. Your package name you can find
 in _Android project properties -> Android Manifest -> Package Name._ If there is
-no name, you should add one. Name must consist only with lower case letters and
-has at least one dot. In example `.myapppackagename`. 
+no name, you should add one. The name must consist only of lower case letters and
+has at least one dot. In example `.myapppackagename`.
+
+* If you will "lucky", then you could catch `System.IO.PathTooLongException`.
+It says about itself. The simple and most appropriate way is to cut your path  
+length, thus just move your folder with project closer to root.  
+
+* Suppose your app on iOS launched, in _All Users_ you see that your device
+was connected to OneSignal, but in column _Subscribed Status_ you see __Error 3000__.
+It means, that something with your provision profile is wrong. I had this error,
+and that is why I suggest you to recreate your id, certificates and provision
+profile manually, and then manually setup it with Xcode. It worked for me, I wish
+it works for you.  
+
+* On __Android__ you might __not receive__ your __notification__ after you __closed__ your __app__.
+There is could be several reasons. It depends on the model of telephone, Android
+version, and others. You can find on the internet how to solve your particular problem
+. But what is not trivial here, but very important, is:
+If you app on Android doesn't receive notifications right after it was installed,
+that you should _close_ it, then _reopen_ and _close again_. And now you __CAN send__ you
+__notification__ even when __app__ is __closed__.  
+
+## Conclusion:
+And actually, that's it. Now you might run and say your boss, that you have implemented
+push notifications with wonderful __OneSignal__. Feel free to play with it,
+and stay tuned! :wink:
