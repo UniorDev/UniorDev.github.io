@@ -70,7 +70,7 @@ __Some tips about that:__
 * You should create this OneSignalNot.. in your current project(app).
 I missed it once :grimacing: and you don't want to do so;   
 
-* Change NotificationService.m, but not NotificationService.h;  
+* Change NotificationService.m, ___but not___ NotificationService.h;  
 
 * Replace `project_name` with your project name in podfile;  
 
@@ -94,7 +94,7 @@ status as Active.
 It's really great, that OneSignal SDK for Xamarin was created. [Here](https://github.com/OneSignal/OneSignal-Xamarin-SDK) is where it
 live. The NuGet package was created pretty recently, so we are happy that we can
 work with OneSignal in the easiest way. Here is where was the conversation about it.
-And I thank [Martijn] (https://github.com/martijn00) for such good work, not only
+And I thank [Martijn](https://github.com/martijn00) for such good work, not only
 with OneSignal SDK, but with great things also.
 So, follow [this](https://documentation.onesignal.com/docs/xamarin-sdk-setup) instructions.  
 
@@ -105,8 +105,8 @@ in _Android project properties -> Android Manifest -> Package Name._ If there is
 no name, you should add one. The name must consist only of lower case letters and
 has at least one dot. In example `.myapppackagename`.
 
-* If you will "lucky", then you could catch `System.IO.PathTooLongException`.
-It says about itself. The simple and most appropriate way is to cut your path  
+* If you will "lucky":scream:(I was), then you could catch `System.IO.PathTooLongException`.
+It says about itself. The simple and most appropriate way is to cut your path
 length, thus just move your folder with project closer to root.  
 
 * Suppose your app on iOS launched, in _All Users_ you see that your device
@@ -117,12 +117,12 @@ profile manually, and then manually setup it with Xcode. It worked for me, I wis
 it works for you.  
 
 * On __Android__ you might __not receive__ your __notification__ after you __closed__ your __app__.
-There is could be several reasons. It depends on the model of telephone, Android
+There is could be several reasons. It depends on the model of mobile phone, Android
 version, and others. You can find on the internet how to solve your particular problem
 . But what is not trivial here, but very important, is:
 If you app on Android doesn't receive notifications right after it was installed,
 that you should _close_ it, then _reopen_ and _close again_. And now you __CAN send__ you
-__notification__ even when __app__ is __closed__.  
+__notification__ even __when app__ is __closed__.  
 
 ## Conclusion:
 And actually, that's it. Now you might run and say your boss, that you have implemented
