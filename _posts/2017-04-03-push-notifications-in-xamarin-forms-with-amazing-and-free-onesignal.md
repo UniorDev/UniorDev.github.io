@@ -117,7 +117,7 @@ profile manually, and then manually setup it with Xcode. It worked for me, I wis
 it works for you.  
 
 * On __Android__ you might __not receive__ your __notification__ after you __closed__ your __app__.
-There is could be several reasons. It depends on the model of mobile phone, Android
+There are could be several reasons. It depends on the model of mobile phone, Android
 version, and others. You can find on the internet how to solve your particular problem
 . But what is not trivial here, but very important, is:
 If you app on Android doesn't receive notifications right after it was installed,
